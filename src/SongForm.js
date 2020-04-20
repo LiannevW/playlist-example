@@ -69,7 +69,7 @@ class SongForm extends React.Component {
                         type="number"
                     />
                     <br />
-                    <button>Submit</button>
+                    <button>Add song</button>
                 </form>
             </Fragment>
         )
