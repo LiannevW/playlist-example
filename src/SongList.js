@@ -1,32 +1,26 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
 const SongList = (props) => {
-    const renderTableRow = () => {
-        return props.songs.map(song => {
-            return <tr key={song.name}>
-                <td>{song.name}</td>
-                <td>{song.artist}</td>
-                <td>{song.genre}</td>
-                <td>{song.rating}</td>
-            </tr>
-        })
+
+    const sortedSongs = (songs, ascending) => {
+        let songsOrdered = songs.sort((a, b) => (a.artist > b.artist) ? 1 : ((b.artist > a.artist) ? -1 : 0));
+        if (!ascending) {
+            songsOrdered.reverse();
+        }
+        return songsOrdered
     }
 
     return (
-        <div>
-            <table>
-                <tbody>
-                    <tr className="song-header">
-                        <th className="song-row__item">Song</th>
-                        <th className="song-row__item">Artist</th>
-                        <th className="song-row__item">Genre</th>
-                        <th className="song-row__item">Rating</th>
-                    </tr>
-                    {renderTableRow()}
-                </tbody>
-            </table>
-
-        </div>
+        <Fragment>
+            {sortedSongs(props.songs, props.ascending).map(song => {
+                return <tr key={song.name}>
+                    <td>{song.name}</td>
+                    <td>{song.artist}</td>
+                    <td>{song.genre}</td>
+                    <td>{song.rating}</td>
+                </tr>
+            })}
+        </Fragment>
     )
 }
 
