@@ -9,76 +9,75 @@ class SongOverview extends React.Component {
         this.state =
         {
             sort: {
-                ascending: true
+                ascending: true,
+                column: 'name'
             },
             songs: [{
                 name: 'd',
-                artist: 'd',
+                artist: 'a',
                 genre: 'd',
                 rating: '2'
             }, {
                 name: 'e',
-                artist: 'e',
+                artist: 'b',
                 genre: 'e',
                 rating: '4'
             }, {
                 name: 'a',
-                artist: 'a',
+                artist: 'c',
                 genre: 'a',
                 rating: '4'
             }, {
                 name: 'b',
-                artist: 'b',
+                artist: 'd',
                 genre: 'b',
                 rating: '4'
             }, {
                 name: 'c',
-                artist: 'c',
+                artist: 'e',
                 genre: 'c',
                 rating: '4'
             }]
         }
-
-    }
-
-    addSong = (song) => {
-        this.setState((prevState) => {
-            const updatedSongs = prevState.songs.concat(song)
-            return {
-                songs: updatedSongs
-            }
-        })
-    }
-
-
-    sortBy = e => {
-        this.setState({
-            songs: this.state.songs,
-            sort: {
-                ascending: !this.state.sort.ascending
-            }
-        });
     }
 
     render() {
+        const addSong = (song) => {
+            this.setState((prevState) => {
+                const updatedSongs = prevState.songs.concat(song)
+                return {
+                    songs: updatedSongs
+                }
+            })
+        }
+
+
+        const sortBy = (type) => {
+            this.setState({
+                songs: this.state.songs,
+                sort: {
+                    ascending: !this.state.sort.ascending,
+                    column: type
+                }
+            });
+        }
+
         return (
             <div>
-                <SongForm addSong={this.addSong} />
+                <SongForm addSong={addSong} />
                 <div>
                     <table>
                         <tbody>
                             <tr className="song-header">
-                                <th className="song-row__item" onClick={this.sortBy}>Song</th>
-                                <th className="song-row__item">Artist</th>
+                                <th className="song-row__item" onClick={() => sortBy('name')}>name</th>
+                                <th className="song-row__item" onClick={() => sortBy('artist')}>artist</th>
                                 <th className="song-row__item">Genre</th>
                                 <th className="song-row__item">Rating</th>
                             </tr>
-                            <SongList songs={this.state.songs} ascending={this.state.sort.ascending} />
+                            <SongList songs={this.state.songs} sort={this.state.sort} />
                         </tbody>
                     </table>
-
                 </div>
-
             </div>
         );
     }

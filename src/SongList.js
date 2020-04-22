@@ -1,9 +1,10 @@
 import React, { Fragment } from 'react'
 
-const SongList = (props) => {
+const SongList = ({ songs, sort }) => {
 
-    const sortedSongs = (songs, ascending) => {
-        let songsOrdered = songs.sort((a, b) => (a.artist > b.artist) ? 1 : ((b.artist > a.artist) ? -1 : 0));
+    const sortedSongs = (songs, sort) => {
+        const { column, ascending } = sort
+        let songsOrdered = songs.sort((a, b) => (a[column] > b[column]) ? 1 : ((b[column] > a[column]) ? -1 : 0));
         if (!ascending) {
             songsOrdered.reverse();
         }
@@ -11,8 +12,8 @@ const SongList = (props) => {
     }
 
     return (
-        <Fragment>
-            {sortedSongs(props.songs, props.ascending).map(song => {
+        < Fragment >
+            {sortedSongs(songs, sort).map(song => {
                 return <tr key={song.name}>
                     <td>{song.name}</td>
                     <td>{song.artist}</td>
@@ -20,7 +21,7 @@ const SongList = (props) => {
                     <td>{song.rating}</td>
                 </tr>
             })}
-        </Fragment>
+        </Fragment >
     )
 }
 
